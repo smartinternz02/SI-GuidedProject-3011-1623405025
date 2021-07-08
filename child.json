@@ -1,0 +1,426 @@
+[
+    {
+        "id": "fc2dafc7.3673d",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8270d260.b07ad",
+        "type": "ibmiot in",
+        "z": "fc2dafc7.3673d",
+        "authentication": "apiKey",
+        "apiKey": "97f093a2.85da6",
+        "inputType": "evt",
+        "logicalInterface": "",
+        "ruleId": "",
+        "deviceId": "1002",
+        "applicationId": "",
+        "deviceType": "+",
+        "eventType": "+",
+        "commandType": "",
+        "format": "json",
+        "name": "IBM IoT",
+        "service": "registered",
+        "allDevices": "",
+        "allApplications": "",
+        "allDeviceTypes": true,
+        "allLogicalInterfaces": "",
+        "allEvents": true,
+        "allCommands": "",
+        "allFormats": "",
+        "qos": 0,
+        "x": 120,
+        "y": 160,
+        "wires": [
+            [
+                "9939ac27.c1b89"
+            ]
+        ]
+    },
+    {
+        "id": "9939ac27.c1b89",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "var name = msg.payload.name\nvar lat = msg.payload.lat\nvar lon = msg.payload.lon\nglobal.set('lat',msg.payload.lat)\nglobal.set('lon',msg.payload.lon)\nglobal.set('name',msg.payload.name)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 280,
+        "y": 160,
+        "wires": [
+            [
+                "1514191a.ef1b37"
+            ]
+        ]
+    },
+    {
+        "id": "1514191a.ef1b37",
+        "type": "debug",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 470,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "4991883a.f9aa38",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "msg.payload={\n    'name':global.get('name'),\n    'lat':global.get('lat'),\n    'lon':global.get('lon')\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 120,
+        "y": 240,
+        "wires": [
+            [
+                "b3f8f533.507978",
+                "c88224a7.4a2e88",
+                "1514191a.ef1b37"
+            ]
+        ]
+    },
+    {
+        "id": "b3f8f533.507978",
+        "type": "ui_worldmap",
+        "z": "fc2dafc7.3673d",
+        "group": "e42489f9.4d91d8",
+        "order": 5,
+        "width": 0,
+        "height": 0,
+        "name": "",
+        "lat": "17.4225176",
+        "lon": "78.5458842",
+        "zoom": "16",
+        "layer": "Esri Satellite",
+        "cluster": "",
+        "maxage": "",
+        "usermenu": "hide",
+        "layers": "hide",
+        "panit": "false",
+        "panlock": "false",
+        "zoomlock": "false",
+        "hiderightclick": "true",
+        "coords": "none",
+        "showgrid": "false",
+        "allowFileDrop": "false",
+        "path": "/worldmap",
+        "x": 460,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "dd6a2df3.6f207",
+        "type": "rbe",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "septopics": true,
+        "property": "payload",
+        "x": 390,
+        "y": 340,
+        "wires": [
+            [
+                "ed8791dc.0ab75"
+            ]
+        ]
+    },
+    {
+        "id": "ed8791dc.0ab75",
+        "type": "switch",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "false"
+            },
+            {
+                "t": "true"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 290,
+        "y": 440,
+        "wires": [
+            [
+                "aa264b65.d766a8",
+                "475078fb.0caea8"
+            ],
+            [
+                "4268de3b.1cebd"
+            ]
+        ]
+    },
+    {
+        "id": "aa264b65.d766a8",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "\"Hello sir, srikanth is in his location\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 420,
+        "wires": [
+            [
+                "eff2702d.d03ea",
+                "21ebfecb.f99b92",
+                "38482a10.8b1d46"
+            ]
+        ]
+    },
+    {
+        "id": "4268de3b.1cebd",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "var d = new Date();\n\nvar utc = d.getTime() + (d.getTimezoneOffset() * 60000);\n\nvar offset =5.5;\n\nnewDate = new Date(utc + (3600000*offset));\n\nmsg.playload = {\n    \"message\":\"Exit\",\n    \"Time\":newDate.toLocaleString(),\n    \"name\":global.get('name'),\n    \"lat\":global.get('latitude'),\n    \"lon\":global.get('longitude')\n};\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 460,
+        "wires": [
+            [
+                "ae8236a3.9fc048",
+                "5924275a.fbda68"
+            ]
+        ]
+    },
+    {
+        "id": "475078fb.0caea8",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "var d = new Date();\n\nvar utc = d.getTime() + (d.getTimezoneOffset() * 60000);\n\nvar offset =5.5;\n\nnewDate = new Date(utc + (3600000*offset));\n\nmsg.playload = {\n    \"message\":\"Entry\",\n    \"Time\":newDate.toLocaleString(),\n    \"name\":global.get('name'),\n    \"lat\":global.get('latitude'),\n    \"lon\":global.get('longitude')\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 460,
+        "y": 500,
+        "wires": [
+            [
+                "ae8236a3.9fc048"
+            ]
+        ]
+    },
+    {
+        "id": "21ebfecb.f99b92",
+        "type": "http request",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "https://www.fast2sms.com/dev/bulkV2?authorization=xpjGqDzwkKOftonMHy7CFNhX95R814acT3rJPdbv0SI2UWeZmE14LHKil3UeMRtpoFI6VxBywOvsEZPm&route=q&message=Hello%20sir,%20srikanth%20is%20not%20in%20his%20location&language=english&flash=0&numbers=6304441951",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "x": 670,
+        "y": 380,
+        "wires": [
+            [
+                "eff2702d.d03ea"
+            ]
+        ]
+    },
+    {
+        "id": "38482a10.8b1d46",
+        "type": "ui_toast",
+        "z": "fc2dafc7.3673d",
+        "position": "dialog",
+        "displayTime": "3",
+        "highlight": "",
+        "sendall": false,
+        "outputs": 1,
+        "ok": "OK",
+        "cancel": "",
+        "raw": false,
+        "topic": "",
+        "name": "",
+        "x": 670,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "ae8236a3.9fc048",
+        "type": "debug",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "eff2702d.d03ea",
+        "type": "debug",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "5924275a.fbda68",
+        "type": "cloudant out",
+        "z": "fc2dafc7.3673d",
+        "name": "child",
+        "cloudant": "",
+        "database": "iotdevice",
+        "service": "node-red-gansg-2021--cloudant-1620812463995-60278",
+        "payonly": false,
+        "operation": "insert",
+        "x": 660,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "f8dd66ee.1f2e28",
+        "type": "function",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "func": "msg.payload=msg.location.inarea\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 250,
+        "y": 340,
+        "wires": [
+            [
+                "dd6a2df3.6f207"
+            ]
+        ]
+    },
+    {
+        "id": "c88224a7.4a2e88",
+        "type": "geofence",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "mode": "circle",
+        "inside": "both",
+        "rad": 16143.363033697387,
+        "points": [],
+        "centre": {
+            "latitude": 17.40004898074154,
+            "longitude": 78.43956758268178
+        },
+        "floor": "",
+        "ceiling": "",
+        "worldmap": false,
+        "outputs": 1,
+        "x": 190,
+        "y": 300,
+        "wires": [
+            [
+                "eff2702d.d03ea"
+            ]
+        ]
+    },
+    {
+        "id": "2ed91708.f05cf8",
+        "type": "inject",
+        "z": "fc2dafc7.3673d",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 80,
+        "y": 380,
+        "wires": [
+            [
+                "4991883a.f9aa38"
+            ]
+        ]
+    },
+    {
+        "id": "97f093a2.85da6",
+        "type": "ibmiot",
+        "name": "iotdata",
+        "keepalive": "60",
+        "serverName": "x62vx4.messaging.internetofthings.ibmcloud.com",
+        "cleansession": true,
+        "appId": "",
+        "shared": false
+    },
+    {
+        "id": "e42489f9.4d91d8",
+        "type": "ui_group",
+        "name": "Default",
+        "tab": "3b2135f0.e770ea",
+        "order": 1,
+        "disp": true,
+        "width": "6",
+        "collapse": false
+    },
+    {
+        "id": "3b2135f0.e770ea",
+        "type": "ui_tab",
+        "name": "[Child Tracker]Map",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]
